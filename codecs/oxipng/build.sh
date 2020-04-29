@@ -9,6 +9,7 @@ echo "============================================="
   export CC=/opt/wasi-sdk/bin/clang
   wasm-pack build -t web
   RUSTFLAGS='-C target-feature=+atomics,+bulk-memory' wasm-pack build -t web -d pkg-parallel -- -Z build-std=panic_abort,std --features=parallel
+  sed -i "s|input = import.meta.url.replace(/\\\.js$/, '_bg.wasm');||" pkg{,-parallel}/oxipng.js
   rm pkg{,-parallel}/.gitignore
 )
 echo "============================================="
