@@ -6,8 +6,9 @@ echo "============================================="
 echo "Compiling wasm"
 echo "============================================="
 (
-  CC=/opt/wasi-sdk/bin/clang RUSTFLAGS='-C target-feature=+atomics,+bulk-memory' rustup run nightly wasm-pack build -t web -- -Z build-std=panic_abort,std
-  wasm-strip pkg/oxipng_bg.wasm
+  export CC=/opt/wasi-sdk/bin/clang
+  wasm-pack build -t web
+  RUSTFLAGS='-C target-feature=+atomics,+bulk-memory' wasm-pack build -t web -d pkg-parallel -- -Z build-std=panic_abort,std --features=parallel
   rm pkg/.gitignore
 )
 echo "============================================="
