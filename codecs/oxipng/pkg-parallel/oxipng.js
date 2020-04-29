@@ -150,7 +150,7 @@ async function init(input, maybe_memory) {
         var ret = wasm.__wbindgen_export_0;
         return addHeapObject(ret);
     };
-    imports.wbg.__wbg_of_9335425aa94288f5 = function(arg0, arg1) {
+    imports.wbg.__wbg_of_131b040dedc797fe = function(arg0, arg1) {
         var ret = Array.of(takeObject(arg0), takeObject(arg1));
         return addHeapObject(ret);
     };
