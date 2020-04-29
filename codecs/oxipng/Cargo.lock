@@ -296,7 +296,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "oxipng"
 version = "0.1.0"
 dependencies = [
- "crossbeam-deque 0.7.3 (registry+https://github.com/rust-lang/crates.io-index)",
+ "crossbeam-channel 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "once_cell 1.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "oxipng 2.3.0",
