@@ -31,12 +31,17 @@ function resolveFileUrl({ fileName }) {
 export default async function ({ watch }) {
   await del('.tmp/build');
 
-  const tsPluginInstance = simpleTS(path.join('src', 'static-build'), {
+  const tsPluginInstance = simpleTS('.', {
     watch,
   });
   const commonPlugins = () => [
     tsPluginInstance,
-    resolveDirsPlugin(['src/static-build']),
+    resolveDirsPlugin([
+      'src/static-build',
+      'src/client',
+      'src/image-worker',
+      'src/worker-main-shared',
+    ]),
     assetPlugin(),
     cssPlugin(resolveFileUrl),
   ];

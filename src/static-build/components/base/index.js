@@ -10,35 +10,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { h, FunctionalComponent, RenderableProps } from 'preact';
+import { h } from 'preact';
 import styles from 'css-bundle:./all.css';
 import clientBundleURL, { imports } from 'client-bundle:client/index.tsx';
-
-interface Props {
-  title?: string;
-}
-
-const BasePage: FunctionalComponent<Props> = ({
-  children,
-  title,
-}: RenderableProps<Props>) => {
-  return (
-    <html lang="en">
-      <head>
-        <title>{title ? `${title} - ` : ''}Squoosh</title>
-        <meta
-          name="viewport"
-          content="width=device-width, minimum-scale=1.0"
-        ></meta>
-        <link rel="stylesheet" href={styles} />
-        <script src={clientBundleURL} defer />
-        {imports.map((v) => (
-          <link rel="preload" as="script" href={v} />
-        ))}
-      </head>
-      <body>{children}</body>
-    </html>
+const BasePage = ({ children, title }) => {
+  return h(
+    'html',
+    { lang: 'en' },
+    h(
+      'head',
+      null,
+      h('title', null, title ? `${title} - ` : '', 'Squoosh'),
+      h('meta', {
+        name: 'viewport',
+        content: 'width=device-width, minimum-scale=1.0',
+      }),
+      h('link', { rel: 'stylesheet', href: styles }),
+      h('script', { src: clientBundleURL, defer: true }),
+      imports.map((v) => h('link', { rel: 'preload', as: 'script', href: v })),
+    ),
+    h('body', null, children),
   );
 };
-
 export default BasePage;

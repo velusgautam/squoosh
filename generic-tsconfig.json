@@ -7,11 +7,11 @@
     "jsxFactory": "h",
     "strict": true,
     "moduleResolution": "node",
-    "outDir": ".tmp/ts",
     "composite": true,
     "declarationMap": true,
     "baseUrl": "./",
     "rootDir": "./",
+    "outDir": ".tmp/ts",
     "allowSyntheticDefaultImports": true,
     "paths": {
       "static-build/*": ["src/static-build/*"],
