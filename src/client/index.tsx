@@ -11,6 +11,6 @@
  * limitations under the License.
  */
 import workerURL from 'omt:image-worker';
+new Worker(workerURL);
 
 console.log('Hi');
-new Worker(workerURL);
