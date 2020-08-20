@@ -14,6 +14,7 @@ import * as path from 'path';
 import del from 'del';
 import resolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
+import OMT from '@surma/rollup-plugin-off-main-thread';
 
 import simpleTS from './lib/simple-ts';
 import clientBundlePlugin from './lib/client-bundle-plugin';
@@ -65,6 +66,7 @@ export default async function ({ watch }) {
         {
           plugins: [
             { resolveFileUrl },
+            OMT(),
             ...commonPlugins(),
             resolve(),
             terser({ module: true }),
@@ -72,7 +74,7 @@ export default async function ({ watch }) {
         },
         {
           dir,
-          format: 'esm',
+          format: 'amd',
           chunkFileNames: staticPath.replace('[extname]', '.js'),
           entryFileNames: staticPath.replace('[extname]', '.js'),
         },

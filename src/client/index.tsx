@@ -10,4 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import workerURL from 'omt:image-worker';
+
 console.log('Hi');
+new Worker(workerURL);
