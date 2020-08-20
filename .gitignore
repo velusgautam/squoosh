@@ -1,6 +1,6 @@
+.tmp
 node_modules
-/build
-/*.log
 *.scss.d.ts
 *.css.d.ts
+build
 *.o

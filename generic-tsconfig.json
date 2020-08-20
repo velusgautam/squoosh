@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "downlevelIteration": true,
+    "module": "esnext",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "strict": true,
+    "moduleResolution": "node",
+    "outDir": ".tmp/ts",
+    "composite": true,
+    "declarationMap": true,
+    "baseUrl": "./",
+    "rootDir": "./",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "static-build/*": ["src/static-build/*"],
+      "image-worker/*": ["src/image-worker/*"],
+      "worker-main-shared/*": ["src/worker-main-shared/*"]
+    }
+  }
+}
