@@ -11,6 +11,7 @@
  * limitations under the License.
  */
 import * as path from 'path';
+import { promises as fsp } from 'fs';
 import del from 'del';
 import resolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
@@ -30,6 +31,10 @@ function resolveFileUrl({ fileName }) {
 }
 
 export default async function ({ watch }) {
+  const omtLoaderPromise = fsp.readFile(
+    path.join(__dirname, 'lib', 'omt.ejs'),
+    'utf-8',
+  );
   await del('.tmp/build');
 
   const tsPluginInstance = simpleTS('.', {
@@ -66,7 +71,7 @@ export default async function ({ watch }) {
         {
           plugins: [
             { resolveFileUrl },
-            OMT(),
+            OMT({ loader: await omtLoaderPromise }),
             ...commonPlugins(),
             resolve(),
             terser({ module: true }),
