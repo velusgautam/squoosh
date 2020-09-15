@@ -18,12 +18,13 @@ import { initEmscriptenModule } from '../util';
 
 let emscriptenModule: Promise<MozJPEGModule>;
 
-export async function encode(
+export default async function encode(
   data: ImageData,
   options: EncodeOptions,
 ): Promise<ArrayBuffer> {
-  if (!emscriptenModule)
+  if (!emscriptenModule) {
     emscriptenModule = initEmscriptenModule(mozjpeg_enc, wasmUrl);
+  }
 
   const module = await emscriptenModule;
   const resultView = module.encode(data.data, data.width, data.height, options);

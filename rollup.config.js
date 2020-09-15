@@ -14,6 +14,7 @@ import * as path from 'path';
 import { promises as fsp } from 'fs';
 import del from 'del';
 import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import { terser } from 'rollup-plugin-terser';
 import OMT from '@surma/rollup-plugin-off-main-thread';
 
@@ -47,6 +48,7 @@ export default async function ({ watch }) {
       'src/client',
       'src/image-worker',
       'src/worker-main-shared',
+      'codecs',
     ]),
     assetPlugin(),
     cssPlugin(resolveFileUrl),
@@ -73,6 +75,7 @@ export default async function ({ watch }) {
             { resolveFileUrl },
             OMT({ loader: await omtLoaderPromise }),
             ...commonPlugins(),
+            commonjs(),
             resolve(),
             terser({ module: true }),
           ],

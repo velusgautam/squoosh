@@ -49,3 +49,8 @@ export function clamp(
 ): number {
   return Math.min(Math.max(num, min), max);
 }
+
+export function timed<T>(name: string, func: () => Promise<T>) {
+  console.time(name);
+  return func().finally(() => console.timeEnd(name));
+}

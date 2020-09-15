@@ -15,9 +15,12 @@ all: $(OUT_JS)
 		${CXXFLAGS} \
 		${LDFLAGS} \
 		--bind \
-		--closure 1 \
 		-s ALLOW_MEMORY_GROWTH=1 \
+		-s MINIMAL_RUNTIME=2 \
 		-s MODULARIZE=1 \
+		-s TEXTDECODER=2 \
+		-s ENVIRONMENT='worker' \
+		-s EXPORT_ES6=1 \
 		-s 'EXPORT_NAME="$(basename $(@F))"' \
 		-o $@ \
 		$+
