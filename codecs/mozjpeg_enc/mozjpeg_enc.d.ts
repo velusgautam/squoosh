@@ -1,6 +1,6 @@
-import { EncodeOptions } from 'worker-main-shared/mozjpegEncode';
+import { EncodeOptions } from 'image-worker/mozjpegEncode';
 
-interface MozJPEGModule extends EmscriptenWasm.Module {
+export interface MozJPEGModule extends EmscriptenWasm.Module {
   encode(
     data: BufferSource,
     width: number,
@@ -9,4 +9,6 @@ interface MozJPEGModule extends EmscriptenWasm.Module {
   ): Uint8Array;
 }
 
-export default function (opts: EmscriptenWasm.ModuleOpts): MozJPEGModule;
+declare var moduleFactory: EmscriptenWasm.ModuleFactory<MozJPEGModule>;
+
+export default moduleFactory;

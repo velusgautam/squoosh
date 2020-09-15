@@ -14,14 +14,13 @@ all: $(OUT_JS)
 		-I $(CODEC_DIR) \
 		${CXXFLAGS} \
 		${LDFLAGS} \
+		--closure 1 \
 		--bind \
 		-s ALLOW_MEMORY_GROWTH=1 \
-		-s MINIMAL_RUNTIME=2 \
 		-s MODULARIZE=1 \
 		-s TEXTDECODER=2 \
 		-s ENVIRONMENT='worker' \
 		-s EXPORT_ES6=1 \
-		-s 'EXPORT_NAME="$(basename $(@F))"' \
 		-o $@ \
 		$+
 

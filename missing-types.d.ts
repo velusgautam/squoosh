@@ -10,6 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/// <reference path="./emscripten-types.d.ts" />
 
 declare module 'url:*' {
   const value: string;

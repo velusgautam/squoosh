@@ -1,23 +1,24 @@
 <!doctype html>
-<script src='mozjpeg_enc.js'></script>
-<script>
-  const module = mozjpeg_enc();
+<script type="module">
+  import mozjpeg_enc from './mozjpeg_enc.js';
 
-  async function loadImage(src) {
-    // Load image
-    const img = document.createElement('img');
-    img.src = src;
-    await new Promise(resolve => img.onload = resolve);
-    // Make canvas same size as image
-    const canvas = document.createElement('canvas');
-    [canvas.width, canvas.height] = [img.width, img.height];
-    // Draw image onto canvas
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-    return ctx.getImageData(0, 0, img.width, img.height);
-  }
+  async function main() {
+    const module = await mozjpeg_enc();
 
-  module.onRuntimeInitialized = async _ => {
+    async function loadImage(src) {
+      // Load image
+      const img = document.createElement('img');
+      img.src = src;
+      await new Promise(resolve => img.onload = resolve);
+      // Make canvas same size as image
+      const canvas = document.createElement('canvas');
+      [canvas.width, canvas.height] = [img.width, img.height];
+      // Draw image onto canvas
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      return ctx.getImageData(0, 0, img.width, img.height);
+    }
+
     console.log('Version:', module.version().toString(16));
     const image = await loadImage('../example.png');
     const result = module.encode(image.data, image.width, image.height, {
@@ -44,5 +45,7 @@
     const img = document.createElement('img');
     img.src = blobURL;
     document.body.appendChild(img);
-  };
+  }
+
+  main();
 </script>

@@ -10,31 +10,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-type ModuleFactory<M extends EmscriptenWasm.Module> = (
-  opts: EmscriptenWasm.ModuleOpts,
-) => M;
-
 export function initEmscriptenModule<T extends EmscriptenWasm.Module>(
-  moduleFactory: ModuleFactory<T>,
+  moduleFactory: EmscriptenWasm.ModuleFactory<T>,
   wasmUrl: string,
 ): Promise<T> {
-  return new Promise((resolve) => {
-    const module = moduleFactory({
-      // Just to be safe, don't automatically invoke any wasm functions
-      noInitialRun: true,
-      locateFile(url: string): string {
-        // Redirect the request for the wasm binary to whatever webpack gave us.
-        if (url.endsWith('.wasm')) return wasmUrl;
-        return url;
-      },
-      onRuntimeInitialized() {
-        // An Emscripten is a then-able that resolves with itself, causing an infinite loop when you
-        // wrap it in a real promise. Delete the `then` prop solves this for now.
-        // https://github.com/kripken/emscripten/issues/5820
-        delete (module as any).then;
-        resolve(module);
-      },
-    });
+  return moduleFactory({
+    // Just to be safe, don't automatically invoke any wasm functions
+    noInitialRun: true,
+    locateFile: () => wasmUrl,
   });
 }
 

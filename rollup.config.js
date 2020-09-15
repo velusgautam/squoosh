@@ -31,6 +31,13 @@ function resolveFileUrl({ fileName }) {
   return JSON.stringify(fileName.replace(/^static\//, '/'));
 }
 
+// With AMD output, Rollup always uses document.baseURI, which breaks in workers.
+// This fixes it:
+function resolveImportMeta(property, { chunkId }) {
+  if (property !== 'url') return;
+  return `new URL(${resolveFileUrl({ fileName: chunkId })}, location).href`;
+}
+
 export default async function ({ watch }) {
   const omtLoaderPromise = fsp.readFile(
     path.join(__dirname, 'lib', 'omt.ejs'),
@@ -68,11 +75,11 @@ export default async function ({ watch }) {
     watch: { clearScreen: false, exclude: ['**/*.ts', '**/*.tsx'] },
     preserveModules: true,
     plugins: [
-      { resolveFileUrl },
+      { resolveFileUrl, resolveImportMeta },
       clientBundlePlugin(
         {
           plugins: [
-            { resolveFileUrl },
+            { resolveFileUrl, resolveImportMeta },
             OMT({ loader: await omtLoaderPromise }),
             ...commonPlugins(),
             commonjs(),
