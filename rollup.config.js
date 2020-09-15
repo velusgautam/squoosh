@@ -26,6 +26,7 @@ import assetPlugin from './lib/asset-plugin';
 import resolveDirsPlugin from './lib/resolve-dirs-plugin';
 import runScript from './lib/run-script';
 import emitFiles from './lib/emit-files-plugin';
+import imageWorkerPlugin from './lib/image-worker-plugin';
 
 function resolveFileUrl({ fileName }) {
   return JSON.stringify(fileName.replace(/^static\//, '/'));
@@ -98,6 +99,7 @@ export default async function ({ watch }) {
       ...commonPlugins(),
       emitFiles({ include: '**/*', root: path.join(__dirname, 'src', 'copy') }),
       nodeExternalPlugin(),
+      imageWorkerPlugin(),
       runScript(dir + '/index.js'),
     ],
   };
